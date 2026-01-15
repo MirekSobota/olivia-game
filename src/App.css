@@ -1,0 +1,196 @@
+:root {
+  --bg-color: #F6FBFF;
+  --header-bg: #FFFFFF;
+  --tile-bg: #ECF6FF;
+  --border-color: #E3F1FF;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, system-ui, sans-serif;
+  background-color: var(--bg-color);
+  transition: background-color 0.5s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app-container {
+  max-width: 480px; /* Limit szerokości jak na telefonie */
+  margin: 0 auto;
+  padding: 12px;
+  padding-bottom: 80px; /* Miejsce na Tabs */
+  min-height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* --- HEADER --- */
+.header-card {
+  background-color: var(--header-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 12px 14px;
+  margin-top: 6px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative; /* Dla rączki */
+}
+
+.target-big {
+  width: 92px;
+  height: 92px;
+  border-radius: 22px;
+  border: 3px solid var(--border-color);
+  background-color: var(--tile-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.target-big img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  transition: opacity 2.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.progress {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+/* --- GRID --- */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding-top: 6px;
+}
+
+.tile {
+  width: 100%;
+  aspect-ratio: 1 / 0.9; /* Proporcja kafelka */
+  border-radius: 22px;
+  border: 1px solid var(--border-color);
+  background-color: var(--tile-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.1s;
+}
+
+.tile:active {
+  transform: scale(0.98);
+}
+
+.tile img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+/* Animacja trzęsienia (Hint) */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+.shake {
+  animation: shake 0.4s ease-in-out infinite;
+}
+
+/* --- COLLECTION --- */
+.collection-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.tile.missing {
+  background-color: #f0f0f0; /* Szary dla niezdobytych */
+}
+
+.tile.missing img {
+  opacity: 0.25;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* --- TABS --- */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: white;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 100;
+  max-width: 480px;
+  margin: 0 auto; /* Centrowanie na dużym ekranie */
+}
+
+.tab-btn {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  position: relative;
+}
+
+.tab-btn.active {
+  background-color: #f0f8ff;
+  border-radius: 12px;
+}
+
+/* --- HAND POINTER --- */
+.hand-pointer {
+  position: absolute;
+  font-size: 44px;
+  z-index: 999;
+  pointer-events: none;
+  animation: bob 1s infinite ease-in-out;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Pozycje rączki w konkretnych kontekstach */
+.hand-on-header { left: 50%; top: 50%; }
+.hand-on-tile { left: 50%; top: 50%; }
+.hand-on-tab { top: -40px; left: 10px; }
+
+/* --- WIN OVERLAY --- */
+.overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.win-card {
+  background: white;
+  padding: 40px;
+  border-radius: 28px;
+  font-size: 44px;
+}
